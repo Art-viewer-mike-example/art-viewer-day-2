@@ -1,4 +1,6 @@
-export const fetchHandler = async (url, options = {}) => {
+const BASE_URL = 'https://api.artic.edu';
+
+const fetchHandler = async (url, options = {}) => {
   try {
     const res = await fetch(url, options);
     const { ok, status, statusText } = res;
@@ -10,4 +12,29 @@ export const fetchHandler = async (url, options = {}) => {
     console.warn(error.message);
     return [error, null]
   }
+}
+
+
+
+/**
+ * Fetch a list of artworks by keyword with a maximum count
+ * @param {string} keyword - The search string to use
+ * @param {number} maxCount - The maximum number of artworks to return
+ * @returns {Promise<[Artwork]>} An array of artworks
+ */
+export const fetchAllArtByKeyword = async (keyword = 'landscape', maxCount = 15) => {
+  const artworksByKeywordUrl = new URL(BASE_URL);
+  // You can just use a string, but the URL object is more readable for long urls.
+  // Plus, your keyword is automatically encoded for you!
+  // https://developer.mozilla.org/en-US/docs/Web/API/URL
+
+  artworksByKeywordUrl.pathname = '/api/v1/artworks/search';
+  artworksByKeywordUrl.searchParams.append('q', keyword);
+  artworksByKeywordUrl.searchParams.append('limit', maxCount);
+  artworksByKeywordUrl.searchParams.append('query[term][is_public_domain]', 'true');
+  artworksByKeywordUrl.searchParams.append('fields', 'id,title,image_id,artwork_type_title');
+
+  const [err, data] = await fetchHandler(artworksByKeywordUrl);
+  if (err) return [];
+  return data.data;
 }
