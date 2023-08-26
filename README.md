@@ -1,0 +1,2 @@
+# art-viewer-day-2
+Day 2 is just about getting the fetches into the skeleton app and deploying them. At bare minimum your app needs to deploy something, even if not the fetches. As a stretch goal, try to render some data from the fetches to the page in some way.
