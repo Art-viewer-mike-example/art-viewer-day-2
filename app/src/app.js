@@ -2,11 +2,13 @@ import {
   fetchAllArtByKeyword,
   fetchArtworkById
 } from "./fetch-funcs";
+import {
+  mainSetup,
+  renderPaintings,
+} from "./render-funcs";
 
 export default async function app(mainEl) {
-  const mainTitle = document.createElement('h1')
-  mainTitle.textContent = 'Art Viewer';
-  mainEl.append(mainTitle);
+  const { paintingsContainer } = mainSetup(mainEl);
 
   // TODO: remove this code when we fetch for real
   const artworks = await fetchAllArtByKeyword()
@@ -16,4 +18,6 @@ export default async function app(mainEl) {
   const artwork = await fetchArtworkById(artworks[0].id)
   console.log('Fetch #2, single')
   console.log(artwork)
+
+  renderPaintings(paintingsContainer, artworks)
 }
