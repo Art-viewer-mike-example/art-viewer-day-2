@@ -1,6 +1,6 @@
 export const mainSetup = (mainEl) => {
   mainEl.innerHTML = `
-    <h1>ArtViewer</h1>
+    <h1>ArtViewer App</h1>
     <div id="paintings">
       <h2>Paintings</h2>
       <div id="paintings-container"></div>
